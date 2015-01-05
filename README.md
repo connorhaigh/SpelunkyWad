@@ -1,6 +1,6 @@
 # SpelunkyWad
 
-A C# library for manipulating Spelunky WAD (and to a lesser extent, WIX) files.
+A C# library for manipulating Spelunky WAD (and to a lesser extent, WIX) files
 
 ## File structure
 
@@ -10,7 +10,7 @@ An archive can have multiple groups, and these groups can contain multiple files
 
 ## Support
 
-Currently, the library can read and extract entries from an archive. I plan to add saving support sometime in the future.
+The library can freely load and save to and from WAD files, and will generate the appropriate WIX files when necessary.
 
 ## Example
 

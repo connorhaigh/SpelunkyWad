@@ -41,6 +41,34 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
+		/// Returns if this entry equals another object.
+		/// </summary>
+		/// <param name="obj">the object</param>
+		/// <returns>if this entry eqauls</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is Group)
+			{
+				var group = (Group) obj;
+
+				return (this.Name == group.Name && this.Entries == group.Entries);
+			}
+			else
+			{
+				return base.Equals(obj);
+			}
+		}
+
+		/// <summary>
+		/// Returns the hash code for this group.
+		/// </summary>
+		/// <returns>the hash code</returns>
+		public override int GetHashCode()
+		{
+			return (this.Name.GetHashCode() + this.Entries.GetHashCode());
+		}
+
+		/// <summary>
 		/// The name of this group.
 		/// </summary>
 		public string Name

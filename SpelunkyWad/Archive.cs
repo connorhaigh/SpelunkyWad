@@ -26,6 +26,15 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
+		/// Creates a new WAD archive.
+		/// </summary>
+		/// <param name="wadFile">the WAD file</param>
+		public Archive(string wadFile) : this(wadFile, wadFile + ".wix")
+		{
+
+		}
+
+		/// <summary>
 		/// Returns a string representation of this archive.
 		/// </summary>
 		/// <returns>a string representation</returns>
@@ -39,15 +48,16 @@ namespace SpelunkyWad
 		/// </summary>
 		public void Load()
 		{
-			//default
-			var group = new Group("Default");
+			//context
+			Group group = null;
 
-			using (StreamReader streamReader = new StreamReader(File.Open(this.WixFile, FileMode.Open)))
+			using (FileStream wadStream = File.Open(this.WadFile, FileMode.Open))
+			using (StreamReader wixStreamReader = new StreamReader(File.Open(this.WixFile, FileMode.Open)))
 			{
-				while (!streamReader.EndOfStream)
+				while (!wixStreamReader.EndOfStream)
 				{
 					//read
-					var line = streamReader.ReadLine();
+					var line = wixStreamReader.ReadLine();
 					var parts = line.Split(' ');
 					var identifier = parts[0];
 
@@ -55,9 +65,17 @@ namespace SpelunkyWad
 					{
 						case "!group":
 						{
-							//new group
-							group = new Group(parts[1]);
-							this.Groups.Add(group);
+							if (group != null)
+							{
+								//add
+								this.Groups.Add(group);
+							}
+
+							//group
+							var name = parts[1];
+
+							//create
+							group = new Group(name);
 
 							break;
 						}
@@ -68,51 +86,56 @@ namespace SpelunkyWad
 							var offset = int.Parse(parts[1]);
 							var length = int.Parse(parts[2]);
 
-							//add
-							var entry = new Entry(name, offset, length);
+							//data
+							var data = new byte[length];
+							wadStream.Seek(offset, SeekOrigin.Begin);
+							wadStream.Read(data, 0, length);
+
+							//create
+							var entry = new Entry(name, data);
 							group.Entries.Add(entry);
 
 							break;
 						}
 					}
 				}
+
+				if (group != null)
+				{
+					//add last
+					this.Groups.Add(group);
+				}
 			}
 		}
 
 		/// <summary>
-		/// Reads and returns the contents of the specified entry.
+		/// Saves this WAD archive to file.
 		/// </summary>
-		/// <param name="entry">the entry</param>
-		/// <returns>the contents</returns>
-		public byte[] Read(Entry entry)
+		public void Save()
 		{
-			using (FileStream fileStream = File.Open(this.WadFile, FileMode.Open))
+			//offset
+			var offset = 0;
+			var written = new Dictionary<Entry, int>();
+
+			using (FileStream wadStream = File.Open(this.WadFile, FileMode.Create))
+			using (StreamWriter wixStreamWriter = new StreamWriter(File.Open(this.WixFile, FileMode.Create)))
 			{
-				//result
-				var result = new byte[entry.Length];
+				foreach (var group in this.Groups)
+				{
+					//group
+					wixStreamWriter.WriteLine(string.Format("!group {0}", group.Name));
 
-				//read
-				fileStream.Seek(entry.Offset, SeekOrigin.Begin);
-				fileStream.Read(result, 0, entry.Length);
+					foreach (var entry in group.Entries)
+					{
+						//entry
+						wixStreamWriter.WriteLine(string.Format("{0} {1} {2}", entry.Name, offset, entry.Data.Length));
+						wadStream.Write(entry.Data, 0, entry.Data.Length);
 
-				return result;
-			}
-		}
-
-		/// <summary>
-		/// Extracts the specified entry to the specified location.
-		/// </summary>
-		/// <param name="entry">the entry</param>
-		/// <param name="file">the file</param>
-		public void Extract(Entry entry, string file)
-		{
-			//read
-			var data = this.Read(entry);
-
-			using (FileStream fileStream = File.Open(file, FileMode.CreateNew))
-			{
-				//write
-				fileStream.Write(data, 0, data.Length);
+						//increment
+						written[entry] = offset;
+						offset += entry.Data.Length;
+					}
+				}
 			}
 		}
 
@@ -135,7 +158,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The groups in this archive..
+		/// The groups in this archive.
 		/// </summary>
 		public List<Group> Groups
 		{

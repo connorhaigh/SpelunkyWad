@@ -15,14 +15,11 @@ namespace SpelunkyWad
 		/// Creates a new entry.
 		/// </summary>
 		/// <param name="name">the name</param>
-		/// <param name="offset">the offset</param>
-		/// <param name="length">the length</param>
-		public Entry(string name, int offset, int length)
+		/// <param name="data">the data</param>
+		public Entry(string name, byte[] data)
 		{
 			this.Name = name;
-
-			this.Offset = offset;
-			this.Length = length;
+			this.Data = data;
 		}
 
 		/// <summary>
@@ -31,7 +28,35 @@ namespace SpelunkyWad
 		/// <returns>a string representation</returns>
 		public override string ToString()
 		{
-			return string.Format("Entry (Name: {0}, Offset: {1}, Length: {2})", this.Name, this.Offset, this.Length);
+			return string.Format("Entry (Name: {0}, Data: {1})", this.Name, this.Data.Length);
+		}
+
+		/// <summary>
+		/// Returns if this entry equals another object.
+		/// </summary>
+		/// <param name="obj">the object</param>
+		/// <returns>if this entry eqauls</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is Entry)
+			{
+				var entry = (Entry) obj;
+
+				return (this.Name == entry.Name && this.Data.Length == entry.Data.Length);
+			}
+			else
+			{
+				return base.Equals(obj);
+			}
+		}
+
+		/// <summary>
+		/// Returns the hash code for this entry.
+		/// </summary>
+		/// <returns>the hash code</returns>
+		public override int GetHashCode()
+		{
+			return (this.Name.GetHashCode() + this.Data.Length);
 		}
 
 		/// <summary>
@@ -44,18 +69,9 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The offset of this entry.
+		/// The data for this entry.
 		/// </summary>
-		public int Offset
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The length of this entry.
-		/// </summary>
-		public int Length
+		public byte[] Data
 		{
 			get;
 			private set;
