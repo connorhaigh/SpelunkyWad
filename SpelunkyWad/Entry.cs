@@ -28,7 +28,7 @@ namespace SpelunkyWad
 		/// <returns>a string representation</returns>
 		public override string ToString()
 		{
-			return string.Format("Entry (Name: {0}, Data: {1})", this.Name, this.Data.Length);
+			return string.Format("Entry (Name: {0}, Data: {1})", this.Name, this.Data);
 		}
 
 		/// <summary>

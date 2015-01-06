@@ -49,6 +49,7 @@ namespace SpelunkyWad
 		public void Load()
 		{
 			//context
+			var groups = new List<Group>();
 			Group group = null;
 
 			using (FileStream wadStream = File.Open(this.WadFile, FileMode.Open))
@@ -68,7 +69,7 @@ namespace SpelunkyWad
 							if (group != null)
 							{
 								//add
-								this.Groups.Add(group);
+								groups.Add(group);
 							}
 
 							//group
@@ -103,9 +104,12 @@ namespace SpelunkyWad
 				if (group != null)
 				{
 					//add last
-					this.Groups.Add(group);
+					groups.Add(group);
 				}
 			}
+
+			//set
+			this.Groups = groups;
 		}
 
 		/// <summary>

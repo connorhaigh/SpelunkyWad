@@ -30,7 +30,7 @@ namespace SpelunkyWad.Utility
 				if (Directory.Exists(input))
 				{
 					//debug
-					Debug.Information("Compressing {0}", input);
+					Debug.Information("Compressing {0}...", input);
 
 					//archive
 					var archiveName = (output + ".wad");
@@ -44,7 +44,7 @@ namespace SpelunkyWad.Utility
 
 						if (verbose)
 						{
-							Debug.Warning("Compressing directory {0}", directoryName);
+							Debug.Warning("Compressing directory {0}...", directoryName);
 						}
 
 						//group path
@@ -61,7 +61,7 @@ namespace SpelunkyWad.Utility
 
 							if (verbose)
 							{
-								Debug.Information("Compressing entry {0}", fileName);
+								Debug.Information("Compressing entry {0}...", fileName);
 							}
 
 							//entry path
@@ -81,7 +81,7 @@ namespace SpelunkyWad.Utility
 
 					if (verbose)
 					{
-						Debug.Warning("Saving archive");
+						Debug.Warning("Saving archive...");
 					}
 
 					//save
@@ -90,7 +90,7 @@ namespace SpelunkyWad.Utility
 				else
 				{
 					//debug
-					Debug.Information("Extracting {0}", input);
+					Debug.Information("Extracting {0}...", input);
 
 					//archive
 					var archive = new Archive(input);
@@ -100,7 +100,7 @@ namespace SpelunkyWad.Utility
 					{
 						if (verbose)
 						{
-							Debug.Warning("Extracting group {0}", group.Name);
+							Debug.Warning("Extracting group {0}...", group.Name);
 						}
 
 						//group path
@@ -113,7 +113,7 @@ namespace SpelunkyWad.Utility
 						{
 							if (verbose)
 							{
-								Debug.Information("Extracting entry {0}", entry.Name);
+								Debug.Information("Extracting entry {0}...", entry.Name);
 							}
 
 							//entry path
@@ -127,7 +127,7 @@ namespace SpelunkyWad.Utility
 
 
 				//debug
-				Debug.Information("Completed successfully");
+				Debug.Information("Completed successfully.");
 			}
 			catch (Exception exception)
 			{
@@ -136,7 +136,7 @@ namespace SpelunkyWad.Utility
 			}
 
 			//wait
-			Console.ReadKey();
+			Debug.AnyKeyPrompt();
 		}
 	}
 }
