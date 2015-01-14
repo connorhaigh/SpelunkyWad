@@ -35,7 +35,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns a string representation of this archive.
+		/// Returns a string representation of the archive.
 		/// </summary>
 		/// <returns>a string representation</returns>
 		public override string ToString()
@@ -144,7 +144,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The location of the WAD file for this archive.
+		/// The location of the WAD file for the archive.
 		/// </summary>
 		public string WadFile
 		{
@@ -153,7 +153,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The location of the WIX file for this archive.
+		/// The location of the WIX file for the archive.
 		/// </summary>
 		public string WixFile
 		{

@@ -23,7 +23,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns a string representation of this entry.
+		/// Returns a string representation of the entry.
 		/// </summary>
 		/// <returns>a string representation</returns>
 		public override string ToString()
@@ -51,7 +51,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns the hash code for this entry.
+		/// Returns the hash code for the entry.
 		/// </summary>
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
@@ -60,7 +60,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The name of this entry.
+		/// The name of the entry.
 		/// </summary>
 		public string Name
 		{
@@ -69,7 +69,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The data for this entry.
+		/// The data for the entry.
 		/// </summary>
 		public byte[] Data
 		{

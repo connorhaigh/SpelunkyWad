@@ -32,7 +32,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns a string representation of this group.
+		/// Returns a string representation of the group.
 		/// </summary>
 		/// <returns>a string representation</returns>
 		public override string ToString()
@@ -60,7 +60,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns the hash code for this group.
+		/// Returns the hash code for the group.
 		/// </summary>
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
@@ -69,7 +69,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The name of this group.
+		/// The name of the group.
 		/// </summary>
 		public string Name
 		{
