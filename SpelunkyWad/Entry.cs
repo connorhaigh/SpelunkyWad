@@ -32,10 +32,10 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns if this entry equals another object.
+		/// Returns if the entry equals another object.
 		/// </summary>
 		/// <param name="obj">the object</param>
-		/// <returns>if this entry eqauls</returns>
+		/// <returns>if this entry equals</returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is Entry)

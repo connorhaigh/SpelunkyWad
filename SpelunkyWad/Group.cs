@@ -41,10 +41,10 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// Returns if this entry equals another object.
+		/// Returns if the entry equals another object.
 		/// </summary>
 		/// <param name="obj">the object</param>
-		/// <returns>if this entry eqauls</returns>
+		/// <returns>if the entry equals</returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is Group)
@@ -78,7 +78,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The entries in this group.
+		/// The entries in the group.
 		/// </summary>
 		public List<Entry> Entries
 		{

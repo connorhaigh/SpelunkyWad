@@ -162,7 +162,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The groups in this archive.
+		/// The groups in the archive.
 		/// </summary>
 		public List<Group> Groups
 		{
