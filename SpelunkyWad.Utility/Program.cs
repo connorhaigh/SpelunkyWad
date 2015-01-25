@@ -15,7 +15,7 @@ namespace SpelunkyWad.Utility
 		/// Main method.
 		/// </summary>
 		/// <param name="args">application arguments</param>
-		public static void Main(string[] args)
+		static void Main(string[] args)
 		{
 			//command line
 			var commandLine = new CommandLine(args);
