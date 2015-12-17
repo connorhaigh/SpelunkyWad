@@ -28,26 +28,19 @@ namespace SpelunkyWad
 		/// <returns>a string representation</returns>
 		public override string ToString()
 		{
-			return string.Format("Entry (Name: {0}, Data: {1})", this.Name, this.Data);
+			return $"Entry (Name: {this.Name})";
 		}
 
 		/// <summary>
 		/// Returns if the entry equals another object.
 		/// </summary>
-		/// <param name="obj">the object</param>
+		/// <param name="instance">the object</param>
 		/// <returns>if this entry equals</returns>
-		public override bool Equals(object obj)
+		public override bool Equals(object instance)
 		{
-			if (obj is Entry)
-			{
-				var entry = (Entry) obj;
+			var entry = instance as Entry;
 
-				return (this.Name == entry.Name && this.Data.Length == entry.Data.Length);
-			}
-			else
-			{
-				return base.Equals(obj);
-			}
+			return this.Name == entry?.Name && this.Data.Length == entry?.Data.Length;
 		}
 
 		/// <summary>
@@ -56,11 +49,11 @@ namespace SpelunkyWad
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
 		{
-			return (this.Name.GetHashCode() + this.Data.Length);
+			return this.Name.GetHashCode() + this.Data.Length;
 		}
 
 		/// <summary>
-		/// The name of the entry.
+		/// Gets the name of the entry.
 		/// </summary>
 		public string Name
 		{
@@ -69,7 +62,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The data for the entry.
+		/// Gets the data for the entry.
 		/// </summary>
 		public byte[] Data
 		{

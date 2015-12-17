@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\SpelunkyWad.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,6 +46,7 @@
     <Compile Include="Archive.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

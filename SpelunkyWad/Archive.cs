@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +14,12 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Creates a new WAD archive.
 		/// </summary>
-		/// <param name="wadFile">the WAD file</param>
-		/// <param name="wixFile">the WIX file</param>
-		public Archive(string wadFile, string wixFile)
+		/// <param name="wad">the WAD file</param>
+		/// <param name="wix">the WIX file</param>
+		public Archive(string wad, string wix)
 		{
-			this.WadFile = wadFile;
-			this.WixFile = wixFile;
+			this.Wad = wad;
+			this.Wix = wix;
 
 			this.Groups = new List<Group>();
 		}
@@ -40,129 +39,45 @@ namespace SpelunkyWad
 		/// <returns>a string representation</returns>
 		public override string ToString()
 		{
-			return string.Format("Archive (WAD File: {0}, WIX File: {1}, Groups: {2})", this.WadFile, this.WixFile, this.Groups);
+			return $"Archive (WAD: {this.Wad}, WIX: {this.Wix})";
 		}
 
 		/// <summary>
-		/// Loads this WAD archive from file.
+		/// Loads the WAD archive from file.
 		/// </summary>
 		public void Load()
 		{
-			//context
-			var groups = new List<Group>();
-			Group group = null;
-
-			using (FileStream wadStream = File.Open(this.WadFile, FileMode.Open))
-			using (StreamReader wixStreamReader = new StreamReader(File.Open(this.WixFile, FileMode.Open)))
-			{
-				while (!wixStreamReader.EndOfStream)
-				{
-					//read
-					var line = wixStreamReader.ReadLine();
-					var parts = line.Split(' ');
-					var identifier = parts[0];
-
-					switch (identifier)
-					{
-						case "!group":
-						{
-							if (group != null)
-							{
-								//add
-								groups.Add(group);
-							}
-
-							//group
-							var name = parts[1];
-
-							//create
-							group = new Group(name);
-
-							break;
-						}
-						default:
-						{
-							//entry
-							var name = parts[0];
-							var offset = int.Parse(parts[1]);
-							var length = int.Parse(parts[2]);
-
-							//data
-							var data = new byte[length];
-							wadStream.Seek(offset, SeekOrigin.Begin);
-							wadStream.Read(data, 0, length);
-
-							//create
-							var entry = new Entry(name, data);
-							group.Entries.Add(entry);
-
-							break;
-						}
-					}
-				}
-
-				if (group != null)
-				{
-					//add last
-					groups.Add(group);
-				}
-			}
-
-			//set
-			this.Groups = groups;
+			this.Groups = Parser.Load(this.Wad, this.Wix);
 		}
 
 		/// <summary>
-		/// Saves this WAD archive to file.
+		/// Saves the WAD archive to file.
 		/// </summary>
 		public void Save()
 		{
-			//offset
-			var offset = 0;
-			var written = new Dictionary<Entry, int>();
-
-			using (FileStream wadStream = File.Open(this.WadFile, FileMode.Create))
-			using (StreamWriter wixStreamWriter = new StreamWriter(File.Open(this.WixFile, FileMode.Create)))
-			{
-				foreach (var group in this.Groups)
-				{
-					//group
-					wixStreamWriter.WriteLine(string.Format("!group {0}", group.Name));
-
-					foreach (var entry in group.Entries)
-					{
-						//entry
-						wixStreamWriter.WriteLine(string.Format("{0} {1} {2}", entry.Name, offset, entry.Data.Length));
-						wadStream.Write(entry.Data, 0, entry.Data.Length);
-
-						//increment
-						written[entry] = offset;
-						offset += entry.Data.Length;
-					}
-				}
-			}
+			Parser.Save(this.Wad, this.Wix, this.Groups);
 		}
 
 		/// <summary>
-		/// The location of the WAD file for the archive.
+		/// Gets or sets the location of the WAD file.
 		/// </summary>
-		public string WadFile
+		public string Wad
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// The location of the WIX file for the archive.
+		/// Gets or sets the location of the WIX file.
 		/// </summary>
-		public string WixFile
+		public string Wix
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// The groups in the archive.
+		/// Gets or sets the groups.
 		/// </summary>
 		public List<Group> Groups
 		{

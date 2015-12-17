@@ -37,26 +37,19 @@ namespace SpelunkyWad
 		/// <returns>a string representation</returns>
 		public override string ToString()
 		{
-			return string.Format("Group (Name: {0}, Entries: {1})", this.Name, this.Entries);
+			return $"Group (Name: {this.Name}, Entries: {this.Entries})";
 		}
 
 		/// <summary>
-		/// Returns if the entry equals another object.
+		/// Returns if the group equals another object.
 		/// </summary>
-		/// <param name="obj">the object</param>
-		/// <returns>if the entry equals</returns>
-		public override bool Equals(object obj)
+		/// <param name="instance">the object</param>
+		/// <returns>if the group equals</returns>
+		public override bool Equals(object instance)
 		{
-			if (obj is Group)
-			{
-				var group = (Group) obj;
+			var group = instance as Group;
 
-				return (this.Name == group.Name && this.Entries == group.Entries);
-			}
-			else
-			{
-				return base.Equals(obj);
-			}
+			return this.Name == group?.Name && this.Entries == group?.Entries;
 		}
 
 		/// <summary>
@@ -65,11 +58,11 @@ namespace SpelunkyWad
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
 		{
-			return (this.Name.GetHashCode() + this.Entries.GetHashCode());
+			return this.Name.GetHashCode() + this.Entries.GetHashCode();
 		}
 
 		/// <summary>
-		/// The name of the group.
+		/// Gets the name of the group.
 		/// </summary>
 		public string Name
 		{
@@ -78,7 +71,7 @@ namespace SpelunkyWad
 		}
 
 		/// <summary>
-		/// The entries in the group.
+		/// Gets the entries in the group.
 		/// </summary>
 		public List<Entry> Entries
 		{
