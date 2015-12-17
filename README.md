@@ -17,16 +17,24 @@ The library can freely load and save to and from WAD files, and will generate th
 A basic example to load a WAD and WIX file would be as follows.
 
 ```csharp
+
+// Load an archive named 'MyArchive' into memory.
+// You can manually specify a matching WIX file.
+
 var archive = new Archive("MyArchive.wad", "MyArchive.wix");
 archive.Load();
 
 foreach (var group in archive.Groups)
 {
-	//do something with the group
+	// Perform some processing on the groups.
 
 	foreach (var entry in group.Entries)
 	{
-		//do something with the entry
+		// Perform some processing on the entries.
 	}
 }
+
+// Save any changes back to the file.
+
+archive.Save();
 ```
