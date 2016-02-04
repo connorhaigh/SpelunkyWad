@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SpelunkyWad
 {
 	/// <summary>
-	/// Represents an entry in a WAD archive.
+	/// Represents an individual entry.
 	/// </summary>
 	public class Entry
 	{
@@ -18,6 +18,16 @@ namespace SpelunkyWad
 		/// <param name="data">the data</param>
 		public Entry(string name, byte[] data)
 		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
+
 			this.Name = name;
 			this.Data = data;
 		}
@@ -25,7 +35,7 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Returns a string representation of the entry.
 		/// </summary>
-		/// <returns>a string representation</returns>
+		/// <returns>the result</returns>
 		public override string ToString()
 		{
 			return $"Entry (Name: {this.Name})";
@@ -34,13 +44,18 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Returns if the entry equals another object.
 		/// </summary>
-		/// <param name="instance">the object</param>
-		/// <returns>if this entry equals</returns>
+		/// <param name="instance">the instance</param>
+		/// <returns>the result</returns>
 		public override bool Equals(object instance)
 		{
 			var entry = instance as Entry;
 
-			return this.Name == entry?.Name && this.Data.Length == entry?.Data.Length;
+			if (entry != null)
+			{
+				return this.Name == entry.Name && this.Data == entry.Data;
+			}
+
+			return base.Equals(instance);
 		}
 
 		/// <summary>
@@ -49,7 +64,7 @@ namespace SpelunkyWad
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
 		{
-			return this.Name.GetHashCode() + this.Data.Length;
+			return this.Name.GetHashCode() ^ this.Data.GetHashCode();
 		}
 
 		/// <summary>

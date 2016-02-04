@@ -18,10 +18,10 @@ A basic example to load a WAD and WIX file would be as follows.
 
 ```csharp
 
-// Load an archive named 'MyArchive' into memory.
-// You can manually specify a matching WIX file.
+// Load an archive named 'Archive' into memory.
+// You can manually specify a matching WIX file. If you don't, Spelunky's convention will be used.
 
-var archive = new Archive("MyArchive.wad", "MyArchive.wix");
+var archive = new Archive("Archive.wad", "Archive.wix");
 archive.Load();
 
 foreach (var group in archive.Groups)

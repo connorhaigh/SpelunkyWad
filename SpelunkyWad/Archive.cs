@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SpelunkyWad
 {
 	/// <summary>
-	/// Represents a WAD archive.
+	/// Represents a Spelunky WAD archive.
 	/// </summary>
 	public class Archive
 	{
@@ -18,6 +18,16 @@ namespace SpelunkyWad
 		/// <param name="wix">the WIX file</param>
 		public Archive(string wad, string wix)
 		{
+			if (wad == null)
+			{
+				throw new ArgumentNullException(nameof(wad));
+			}
+
+			if (wix == null)
+			{
+				throw new ArgumentNullException(nameof(wix));
+			}
+
 			this.Wad = wad;
 			this.Wix = wix;
 
@@ -36,10 +46,36 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Returns a string representation of the archive.
 		/// </summary>
-		/// <returns>a string representation</returns>
+		/// <returns>the result</returns>
 		public override string ToString()
 		{
 			return $"Archive (WAD: {this.Wad}, WIX: {this.Wix})";
+		}
+
+		/// <summary>
+		/// Returns if the archive equals another object.
+		/// </summary>
+		/// <param name="instance">the instance</param>
+		/// <returns>the result</returns>
+		public override bool Equals(object instance)
+		{
+			var archive = instance as Archive;
+
+			if (archive != null)
+			{
+				return this.Wad == archive.Wad && this.Wix == archive.Wix;
+			}
+
+			return base.Equals(instance);
+		}
+
+		/// <summary>
+		/// Returns the hash code for the archive.
+		/// </summary>
+		/// <returns>the hash code</returns>
+		public override int GetHashCode()
+		{
+			return this.Wad.GetHashCode() ^ this.Wix.GetHashCode();
 		}
 
 		/// <summary>

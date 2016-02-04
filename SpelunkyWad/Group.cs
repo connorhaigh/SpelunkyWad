@@ -18,6 +18,16 @@ namespace SpelunkyWad
 		/// <param name="entries">the entries</param>
 		public Group(string name, List<Entry> entries)
 		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			if (entries == null)
+			{
+				throw new ArgumentNullException(nameof(entries));
+			}
+
 			this.Name = name;
 			this.Entries = entries;
 		}
@@ -34,7 +44,7 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Returns a string representation of the group.
 		/// </summary>
-		/// <returns>a string representation</returns>
+		/// <returns>the result</returns>
 		public override string ToString()
 		{
 			return $"Group (Name: {this.Name}, Entries: {this.Entries})";
@@ -43,13 +53,18 @@ namespace SpelunkyWad
 		/// <summary>
 		/// Returns if the group equals another object.
 		/// </summary>
-		/// <param name="instance">the object</param>
-		/// <returns>if the group equals</returns>
+		/// <param name="instance">the instance</param>
+		/// <returns>the result</returns>
 		public override bool Equals(object instance)
 		{
 			var group = instance as Group;
 
-			return this.Name == group?.Name && this.Entries == group?.Entries;
+			if (group != null)
+			{
+				return this.Name == group.Name && this.Entries == group.Entries;
+			}
+
+			return base.Equals(instance);
 		}
 
 		/// <summary>
@@ -58,7 +73,7 @@ namespace SpelunkyWad
 		/// <returns>the hash code</returns>
 		public override int GetHashCode()
 		{
-			return this.Name.GetHashCode() + this.Entries.GetHashCode();
+			return this.Name.GetHashCode() ^ this.Entries.GetHashCode();
 		}
 
 		/// <summary>
