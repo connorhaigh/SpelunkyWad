@@ -67,7 +67,6 @@ namespace SpelunkyWad
 		public static void Save(string wad, string wix, List<Group> groups)
 		{
 			var offset = 0;
-			var written = new Dictionary<Entry, int>();
 
 			using (FileStream wadStream = File.Open(wad, FileMode.Create))
 			using (StreamWriter wixStream = new StreamWriter(File.Open(wix, FileMode.Create)))
@@ -78,10 +77,9 @@ namespace SpelunkyWad
 
 					foreach (var entry in group.Entries)
 					{
-						wixStream.WriteLine($"{entry.Name} {offset} {entry.Data.Length}");
 						wadStream.Write(entry.Data, 0, entry.Data.Length);
+						wixStream.WriteLine($"{entry.Name} {offset} {entry.Data.Length}");
 
-						written[entry] = offset;
 						offset += entry.Data.Length;
 					}
 				}
