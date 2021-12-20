@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelunkyWad", "SpelunkyWad\SpelunkyWad.csproj", "{EE40FD36-3B3E-4926-BB41-832FE6F69B8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpelunkyWad", "SpelunkyWad\SpelunkyWad.csproj", "{408B34F7-32E3-4051-8D8D-655E800C9525}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{01207E46-9F01-4AE0-A9DB-52CD924B7572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpelunkyWad.Tests", "SpelunkyWad.Tests\SpelunkyWad.Tests.csproj", "{D783B77A-F2EF-42DD-A616-F16289E3AB19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A44835DB-A194-4E6C-BED5-CCB5CE938364}"
 	ProjectSection(SolutionItems) = preProject
-		LICENCE.txt = LICENCE.txt
-		README.md = README.md
+		Licence.txt = Licence.txt
+		ReadMe.md = ReadMe.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelunkyWad.Cli", "SpelunkyWad.Cli\SpelunkyWad.Cli.csproj", "{2342345B-9F82-4751-84D3-EE101423D31C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EE40FD36-3B3E-4926-BB41-832FE6F69B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE40FD36-3B3E-4926-BB41-832FE6F69B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE40FD36-3B3E-4926-BB41-832FE6F69B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE40FD36-3B3E-4926-BB41-832FE6F69B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{408B34F7-32E3-4051-8D8D-655E800C9525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408B34F7-32E3-4051-8D8D-655E800C9525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408B34F7-32E3-4051-8D8D-655E800C9525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408B34F7-32E3-4051-8D8D-655E800C9525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D783B77A-F2EF-42DD-A616-F16289E3AB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D783B77A-F2EF-42DD-A616-F16289E3AB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D783B77A-F2EF-42DD-A616-F16289E3AB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D783B77A-F2EF-42DD-A616-F16289E3AB19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2342345B-9F82-4751-84D3-EE101423D31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2342345B-9F82-4751-84D3-EE101423D31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2342345B-9F82-4751-84D3-EE101423D31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2342345B-9F82-4751-84D3-EE101423D31C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F3EC228-BEAC-4FEF-ABFB-50E18555E05F}
 	EndGlobalSection
 EndGlobal

@@ -1,97 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpelunkyWad
 {
 	/// <summary>
 	/// Represents a group of entries.
 	/// </summary>
-	public class Group
+	public sealed class Group
 	{
 		/// <summary>
-		/// Creates a new group.
+		/// Creates a new group instance with the specified name and specified entries.
 		/// </summary>
-		/// <param name="name">the name</param>
-		/// <param name="entries">the entries</param>
-		public Group(string name, List<Entry> entries)
+		/// <param name="name">The name.</param>
+		/// <param name="entries">The entries.</param>
+		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
+		public Group(string name, IEnumerable<Entry> entries)
 		{
-			if (name == null)
-			{
-				throw new ArgumentNullException(nameof(name));
-			}
-
-			if (entries == null)
-			{
-				throw new ArgumentNullException(nameof(entries));
-			}
-
-			this.Name = name;
-			this.Entries = entries;
+			this.name = name ?? throw new ArgumentNullException(name);
+			this.Entries = new List<Entry>(entries ?? throw new ArgumentNullException(nameof(entries)));
 		}
 
 		/// <summary>
-		/// Creates a new group.
+		/// Creates a new group instance with the specified name.
 		/// </summary>
-		/// <param name="name">the entries</param>
-		public Group(string name) : this(name, new List<Entry>())
+		/// <param name="name">The name.</param>
+		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
+		public Group(string name)
 		{
-
+			this.name = name ?? throw new ArgumentNullException(nameof(name));
+			this.Entries = new List<Entry>();
 		}
 
 		/// <summary>
-		/// Returns a string representation of the group.
-		/// </summary>
-		/// <returns>the result</returns>
-		public override string ToString()
-		{
-			return $"Group (Name: {this.Name}, Entries: {this.Entries})";
-		}
-
-		/// <summary>
-		/// Returns if the group equals another object.
-		/// </summary>
-		/// <param name="instance">the instance</param>
-		/// <returns>the result</returns>
-		public override bool Equals(object instance)
-		{
-			var group = instance as Group;
-
-			if (group != null)
-			{
-				return this.Name == group.Name && this.Entries == group.Entries;
-			}
-
-			return base.Equals(instance);
-		}
-
-		/// <summary>
-		/// Returns the hash code for the group.
-		/// </summary>
-		/// <returns>the hash code</returns>
-		public override int GetHashCode()
-		{
-			return this.Name.GetHashCode() ^ this.Entries.GetHashCode();
-		}
-
-		/// <summary>
-		/// Gets the name of the group.
+		/// Gets the name.
 		/// </summary>
 		public string Name
 		{
-			get;
-			private set;
+			get => this.name;
+			set => this.name = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>
-		/// Gets the entries in the group.
+		/// Gets the entries.
 		/// </summary>
-		public List<Entry> Entries
-		{
-			get;
-			private set;
-		}
+		public IList<Entry> Entries { get; } = null;
+
+		private string name = null;
 	}
 }
