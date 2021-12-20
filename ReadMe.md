@@ -12,7 +12,7 @@ Included is also a command-line application which can be used to perform a few b
 
 ## Example
 
-Reading an archive from a WAD and WIX file.
+Reading an archive from a WAD file and a WIX file.
 
 ```csharp
 using (var wadStream = new FileStream("archive.wad", FileMode.Open))
@@ -32,7 +32,7 @@ using (var wixStream = new FileStream("archive.wix", FileMode.Open))
 }
 ```
 
-Writing an archive to a WAD and WIX file.
+Writing an archive to a WAD file and a WIX file.
 
 ```csharp
 
@@ -40,8 +40,8 @@ var archive = new Archive();
 
 // Add groups and entries...
 
-using (var wadStream = new FileStream("archive.wad", FileMode.Open))
-using (var wixStream = new FileStream("archive.wix", FileMode.Open))
+using (var wadStream = new FileStream("archive.wad", FileMode.Create))
+using (var wixStream = new FileStream("archive.wix", FileMode.Create))
 {
 	ArchiveWriter.Write(archive, wadStream, wixStream);
 }
