@@ -1,0 +1,38 @@
+name: .NET Bundle
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Prepare
+        uses: actions/setup-dotnet@v1.8.2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --no-build --verbosity normal
+
+      - name: Publish
+        run: dotnet publish --configuration Release --output Executables -r win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:PublishReadyToRun=true
+
+      - name: Upload
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: Executables
+          path: Executables/*.exe
