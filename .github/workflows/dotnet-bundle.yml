@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Release
+    name: Bundle
     runs-on: windows-latest
 
     steps:
