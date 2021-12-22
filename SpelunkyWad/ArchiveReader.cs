@@ -105,6 +105,6 @@ namespace SpelunkyWad
 		/// <returns>A task representing the operation.</returns>
 		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
 		/// <exception cref="ArchiveReaderException">If the archive cannot be read.</exception>
-		public static Task<Archive> ReadAsync(Stream wadStream, Stream wixStream) => Task.Run(() => ArchiveReader.Read(wadStream, wixStream));
+		public static async Task<Archive> ReadAsync(Stream wadStream, Stream wixStream) => await Task.Run(() => ArchiveReader.Read(wadStream, wixStream));
 	}
 }

@@ -71,6 +71,6 @@ namespace SpelunkyWad
 		/// <returns>A task representing the operation.</returns>
 		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
 		/// <exception cref="ArchiveReaderException">If the archive cannot be written.</exception>
-		public static Task WriteAsync(Archive archive, Stream wadStream, Stream wixStream) => Task.Run(() => ArchiveWriter.Write(archive, wadStream, wixStream));
+		public static async Task WriteAsync(Archive archive, Stream wadStream, Stream wixStream) => await Task.Run(() => ArchiveWriter.Write(archive, wadStream, wixStream));
 	}
 }
