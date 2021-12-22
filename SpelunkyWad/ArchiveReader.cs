@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using SubstreamSharp;
 
@@ -39,14 +40,20 @@ namespace SpelunkyWad
 
 			while (!wixStreamReader.EndOfStream)
 			{
-				var line = wixStreamReader.ReadLine().Trim();
+				var line = wixStreamReader
+					.ReadLine()
+					.Trim();
 
 				if (string.IsNullOrWhiteSpace(line))
 				{
 					continue;
 				}
 
-				var tokens = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+				var tokens = line
+					.Split(new char[] { ' ' })
+					.Where(token => !string.IsNullOrWhiteSpace(token))
+					.Select(token => token.Trim())
+					.ToArray();
 
 				if (tokens[0] == "!group")
 				{
@@ -69,8 +76,6 @@ namespace SpelunkyWad
 						throw new ArchiveReaderException("Attempted to add an entry with no previously defined group.");
 					}
 
-					var name = tokens[0];
-
 					if (!long.TryParse(tokens[1], out var offset))
 					{
 						throw new ArchiveReaderException("Failed to parse entry offset.");
@@ -85,7 +90,7 @@ namespace SpelunkyWad
 					// We could have used a memory stream here, but that would require having to load the entire contents into memory.
 					// This is wrapped in a simple read-only stream to disallow any modification directly to the underlying stream.
 
-					group.Entries.Add(entry = new Entry(name, new EntryStream(new Substream(wadStream, offset, length))));
+					group.Entries.Add(entry = new Entry(tokens[0], new EntryStream(new Substream(wadStream, offset, length))));
 				}
 			}
 

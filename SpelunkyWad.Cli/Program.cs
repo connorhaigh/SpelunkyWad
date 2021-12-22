@@ -103,21 +103,19 @@ namespace SpelunkyWad.Cli
 				})
 				.WithParsed<PatchOptions>(options =>
 				{
+					Archive archive = null;
+
 					using (var wadStream = new FileStream(options.Wad, FileMode.Open))
 					using (var wixStream = new FileStream(options.Wix, FileMode.Open))
-					using (var patchWadSream = new FileStream(options.PatchWad, FileMode.Open))
-					using (var patchWixStream = new FileStream(options.PatchWix, FileMode.Open))
 					{
 						Console.Out.WriteLine("Reading archive...");
 
-						var archive = ArchiveReader.Read(wadStream, wixStream);
+						archive = ArchiveReader.Read(wadStream, wixStream);
 
 						foreach (var group in archive.Groups)
 						{
 							foreach (var entry in group.Entries)
 							{
-								// Copy the stream to a memory stream first, as we will be updating the source WAD file and source WIX file in-place.
-
 								var memoryStream = new MemoryStream();
 
 								entry.Stream.Seek(0L, SeekOrigin.Begin);
@@ -126,7 +124,13 @@ namespace SpelunkyWad.Cli
 								entry.Stream = memoryStream;
 							}
 						}
+					}
 
+					using (var wadStream = new FileStream(options.Wad, FileMode.Truncate))
+					using (var wixStream = new FileStream(options.Wix, FileMode.Truncate))
+					using (var patchWadSream = new FileStream(options.PatchWad, FileMode.Open))
+					using (var patchWixStream = new FileStream(options.PatchWix, FileMode.Open))
+					{
 						Console.Out.WriteLine("Reading patch archive...");
 
 						var patchArchive = ArchiveReader.Read(patchWadSream, patchWixStream);
@@ -154,11 +158,6 @@ namespace SpelunkyWad.Cli
 								entry.Stream = patchEntry.Stream;
 							}
 						}
-
-						// Move both streams back to the start, so we can update in-place.
-
-						wadStream.Seek(0L, SeekOrigin.Begin);
-						wixStream.Seek(0L, SeekOrigin.Begin);
 
 						Console.Out.WriteLine("Writing archive...");
 
