@@ -1,4 +1,4 @@
-name: .NET Release
+name: .NET Pack
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Release
+    name: Pack
     runs-on: windows-latest
 
     steps:
