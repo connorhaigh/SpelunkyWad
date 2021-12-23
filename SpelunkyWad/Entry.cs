@@ -1,88 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace SpelunkyWad
 {
 	/// <summary>
 	/// Represents an individual entry.
 	/// </summary>
-	public class Entry
+	public sealed class Entry
 	{
 		/// <summary>
-		/// Creates a new entry.
+		/// Creates a new entry instance with the specified name sourcing from the specified stream.
 		/// </summary>
-		/// <param name="name">the name</param>
-		/// <param name="data">the data</param>
-		public Entry(string name, byte[] data)
+		/// <param name="name">The name.</param>
+		/// <param name="stream">The stream.</param>
+		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
+		public Entry(string name, Stream stream)
 		{
-			if (name == null)
-			{
-				throw new ArgumentNullException(nameof(name));
-			}
-
-			if (data == null)
-			{
-				throw new ArgumentNullException(nameof(data));
-			}
-
-			this.Name = name;
-			this.Data = data;
+			this.name = name ?? throw new ArgumentNullException(nameof(name));
+			this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
 		}
 
 		/// <summary>
-		/// Returns a string representation of the entry.
+		/// Creates a new entry instance with the specified name.
 		/// </summary>
-		/// <returns>the result</returns>
-		public override string ToString()
+		/// <param name="name">The name.</param>
+		/// <exception cref="ArgumentNullException">If any arguments are null.</exception>
+		public Entry(string name)
 		{
-			return $"Entry (Name: {this.Name})";
+			this.name = name ?? throw new ArgumentNullException(nameof(name));
+			this.stream = new MemoryStream();
 		}
 
 		/// <summary>
-		/// Returns if the entry equals another object.
-		/// </summary>
-		/// <param name="instance">the instance</param>
-		/// <returns>the result</returns>
-		public override bool Equals(object instance)
-		{
-			var entry = instance as Entry;
-
-			if (entry != null)
-			{
-				return this.Name == entry.Name && this.Data == entry.Data;
-			}
-
-			return base.Equals(instance);
-		}
-
-		/// <summary>
-		/// Returns the hash code for the entry.
-		/// </summary>
-		/// <returns>the hash code</returns>
-		public override int GetHashCode()
-		{
-			return this.Name.GetHashCode() ^ this.Data.GetHashCode();
-		}
-
-		/// <summary>
-		/// Gets the name of the entry.
+		/// Gets or sets the name.
 		/// </summary>
 		public string Name
 		{
-			get;
-			private set;
+			get => this.name;
+			set => this.name = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>
-		/// Gets the data for the entry.
+		/// Gets or sets the stream.
 		/// </summary>
-		public byte[] Data
+		public Stream Stream
 		{
-			get;
-			private set;
+			get => this.stream;
+			set => this.stream = value ?? throw new ArgumentNullException(nameof(value));
 		}
+
+		private string name = null;
+		private Stream stream = null;
 	}
 }
