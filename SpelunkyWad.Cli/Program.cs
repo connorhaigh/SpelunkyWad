@@ -103,34 +103,18 @@ namespace SpelunkyWad.Cli
 				})
 				.WithParsed<PatchOptions>(options =>
 				{
-					Archive archive = null;
+					string temporaryWad = null;
+					string temporaryWix = null;
 
 					using (var wadStream = new FileStream(options.Wad, FileMode.Open))
 					using (var wixStream = new FileStream(options.Wix, FileMode.Open))
-					{
-						Console.Out.WriteLine("Reading archive...");
-
-						archive = ArchiveReader.Read(wadStream, wixStream);
-
-						foreach (var group in archive.Groups)
-						{
-							foreach (var entry in group.Entries)
-							{
-								var memoryStream = new MemoryStream();
-
-								entry.Stream.Seek(0L, SeekOrigin.Begin);
-								entry.Stream.CopyTo(memoryStream);
-
-								entry.Stream = memoryStream;
-							}
-						}
-					}
-
-					using (var wadStream = new FileStream(options.Wad, FileMode.Truncate))
-					using (var wixStream = new FileStream(options.Wix, FileMode.Truncate))
 					using (var patchWadSream = new FileStream(options.PatchWad, FileMode.Open))
 					using (var patchWixStream = new FileStream(options.PatchWix, FileMode.Open))
 					{
+						Console.Out.WriteLine("Reading archive...");
+
+						var archive = ArchiveReader.Read(wadStream, wixStream);
+
 						Console.Out.WriteLine("Reading patch archive...");
 
 						var patchArchive = ArchiveReader.Read(patchWadSream, patchWixStream);
@@ -159,10 +143,24 @@ namespace SpelunkyWad.Cli
 							}
 						}
 
-						Console.Out.WriteLine("Writing archive...");
+						Console.Out.WriteLine("Creating temporary files...");
 
-						ArchiveWriter.Write(archive, wadStream, wixStream);
+						temporaryWad = Path.GetTempFileName();
+						temporaryWix = Path.GetTempFileName();
+
+						using (var temporaryWadStream = new FileStream(temporaryWad, FileMode.Create))
+						using (var temporaryWixStream = new FileStream(temporaryWix, FileMode.Create))
+						{
+							Console.Out.WriteLine("Writing archive...");
+
+							ArchiveWriter.Write(archive, temporaryWadStream, temporaryWixStream);
+						}
 					}
+
+					Console.Out.WriteLine("Moving temporary files...");
+
+					File.Move(temporaryWad, options.Wad, true);
+					File.Move(temporaryWix, options.Wix, true);
 				});
 		}
 	}
