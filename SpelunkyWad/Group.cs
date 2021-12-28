@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SpelunkyWad
 {
 	/// <summary>
-	/// Represents a group of entries.
+	/// Represents a group, with a collection of individual entries.
 	/// </summary>
 	public sealed class Group
 	{

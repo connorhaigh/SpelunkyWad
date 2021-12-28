@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SpelunkyWad
 {
 	/// <summary>
-	/// Represents a collective WAD file and WIX file.
+	/// Represents an archive, with a collection of multiple groups.
 	/// </summary>
 	public sealed class Archive
 	{
