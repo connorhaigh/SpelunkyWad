@@ -15,6 +15,8 @@ Included is also a command-line application which can be used to perform a few b
 Reading an archive from a WAD file and a WIX file.
 
 ```csharp
+using SpelunkyWad;
+
 using (var wadStream = new FileStream("archive.wad", FileMode.Open))
 using (var wixStream = new FileStream("archive.wix", FileMode.Open))
 {
@@ -35,6 +37,7 @@ using (var wixStream = new FileStream("archive.wix", FileMode.Open))
 Writing an archive to a WAD file and a WIX file.
 
 ```csharp
+using SpelunkyWad;
 
 var archive = new Archive();
 
@@ -49,8 +52,8 @@ using (var wixStream = new FileStream("archive.wix", FileMode.Create))
 
 ## Notes
 
-Entries are not loaded into memory when an archive is read. Instead, their streams point towards the specific region in the WAD file which encapsulates their contents. Due to this, it is important to keep the underlying WAD and WIX streams open for the duration the archive is being used. It is also important to ensure that if the same streams are used for both a read operation and write operation, that both are seeked to the beginning before the write operation.
+Entries are not loaded into memory when an archive is read. Instead, their streams point towards the specific region in the WAD file which encapsulates their contents. Due to this, it is important to keep the underlying WAD and WIX streams open for the duration the archive is being used. It is also important to ensure that if the same streams are used for both a read operation and write operation, that both are are moved to the beginning via the `Seek` method before the write operation.
 
-As a side effect, the initial stream for each entry will only support read operations and cannot be written to. This is to avoid inadvertently modifying the underlying streams outside the context of a write operation. In order to perform an in-place replacement of the contents of an entry, replace the stream instance entirely.
+As a side effect, the initial stream for each entry will only support read operations and cannot be written to. This is to avoid inadvertently modifying the underlying streams outside the context of a write operation. In order to perform an in-place replacement of the contents of an entry, replace the `Stream` property entirely.
 
 In some official Spelunky archives, entries are occasionally duplicated in different groups but with the same name as well as same offset and length. While the library does support reading duplicate entries, it will not write duplicate entries; each entry will be written separately regardless if the data is duplicated.
