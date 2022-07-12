@@ -4,11 +4,11 @@
 		<OutputType>Exe</OutputType>
 
 		<Product>SpelunkyWad CLI</Product>
-		<Description>SpelunkyWad command line interface</Description>
+		<Description>SpelunkyWad CLI is a command-line interface for interacting with Spelunky WAD and WIX files.</Description>
 		<Version>1.0.1</Version>
 
 		<Authors>Connor Haigh</Authors>
-		<Copyright>Connor Haigh 2021</Copyright>
+		<Copyright>Connor Haigh 2022</Copyright>
 
 		<IsPackable>False</IsPackable>
 	</PropertyGroup>
